@@ -218,19 +218,6 @@ export default function App() {
     speakingIdxRef.current = null;
   }
 
-  function handleNewConversation() {
-    stopSpeaking();
-    setSpeakingIdx(null);
-    setHighlightWordIdx(null);
-    speakingIdxRef.current = null;
-    setSetup(null);
-    setMessages([]);
-    setLatestResult(null);
-    setError(null);
-    setUserLine('');
-    setIsEnded(false);
-  }
-
   const handleTranscriptDone = useCallback(
     (text: string) => {
       if (!setup || !envApiKey || isEnded || loading) return;
