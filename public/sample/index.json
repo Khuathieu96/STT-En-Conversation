@@ -1,0 +1,86 @@
+{
+  "topics": [
+    {
+      "id": "restaurant",
+      "name": "Restaurant Conversations",
+      "scenarios": [
+        {
+          "id": "order-main-dish",
+          "name": "Order Main Dish",
+          "context": "You are at a casual restaurant and the waiter asks what main dish you would like.",
+          "character": "Friendly waiter speaking simple English for learners.",
+          "openingBotLine": "Welcome! What main dish would you like to order today?"
+        },
+        {
+          "id": "ask-for-recommendation",
+          "name": "Ask for Recommendation",
+          "context": "You are unsure what to eat and want the waiter to suggest something popular.",
+          "character": "Helpful waiter recommending local dishes.",
+          "openingBotLine": "If you want, I can recommend our most popular dishes. What flavors do you like?"
+        },
+        {
+          "id": "dietary-request",
+          "name": "Dietary Request",
+          "context": "You need a vegetarian option and want to confirm ingredients.",
+          "character": "Patient waiter who explains menu ingredients clearly.",
+          "openingBotLine": "Sure, I can help with vegetarian choices. Do you avoid eggs or dairy too?"
+        },
+        {
+          "id": "change-order",
+          "name": "Change an Order",
+          "context": "You already ordered but now need to change one item politely.",
+          "character": "Calm waiter handling order updates.",
+          "openingBotLine": "No problem, I can update your order. Which item would you like to change?"
+        },
+        {
+          "id": "pay-the-bill",
+          "name": "Pay the Bill",
+          "context": "You finished eating and want to ask for the bill and payment options.",
+          "character": "Professional waiter closing the meal politely.",
+          "openingBotLine": "I hope you enjoyed your meal. Would you like the bill now?"
+        }
+      ]
+    },
+    {
+      "id": "travel",
+      "name": "Travel Situations",
+      "scenarios": [
+        {
+          "id": "airport-checkin",
+          "name": "Airport Check-in",
+          "context": "You are at the airline counter checking in for an international flight.",
+          "character": "Airline staff speaking clearly and professionally.",
+          "openingBotLine": "Good morning. May I see your passport and booking confirmation, please?"
+        },
+        {
+          "id": "hotel-checkin",
+          "name": "Hotel Check-in",
+          "context": "You arrive at your hotel and need to complete check-in.",
+          "character": "Hotel receptionist who is polite and efficient.",
+          "openingBotLine": "Welcome to our hotel. Do you already have a reservation with us?"
+        },
+        {
+          "id": "ask-for-directions",
+          "name": "Ask for Directions",
+          "context": "You are in a new city and need directions to a tourist place.",
+          "character": "Friendly local giving simple street directions.",
+          "openingBotLine": "Hi there! Where are you trying to go? I can help with directions."
+        },
+        {
+          "id": "train-ticket",
+          "name": "Buy Train Ticket",
+          "context": "You need to buy a train ticket and ask about departure time and platform.",
+          "character": "Station ticket clerk helping travelers quickly.",
+          "openingBotLine": "Sure, where are you traveling today, and what time would you like to depart?"
+        },
+        {
+          "id": "lost-luggage",
+          "name": "Report Lost Luggage",
+          "context": "Your suitcase did not arrive, and you need to report it at the airport desk.",
+          "character": "Baggage service agent collecting details calmly.",
+          "openingBotLine": "I am sorry your bag is missing. Can you describe your suitcase for me?"
+        }
+      ]
+    }
+  ]
+}

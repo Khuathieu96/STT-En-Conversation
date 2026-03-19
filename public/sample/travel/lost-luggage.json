@@ -1,0 +1,9 @@
+{
+  "topicId": "travel",
+  "topicName": "Travel Situations",
+  "id": "lost-luggage",
+  "name": "Report Lost Luggage",
+  "context": "Your suitcase did not arrive, and you need to report it at the airport desk.",
+  "character": "Baggage service agent collecting details calmly.",
+  "openingBotLine": "I am sorry your bag is missing. Can you describe your suitcase for me?"
+}

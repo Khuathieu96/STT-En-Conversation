@@ -1,0 +1,9 @@
+{
+  "topicId": "restaurant",
+  "topicName": "Restaurant Conversations",
+  "id": "ask-for-recommendation",
+  "name": "Ask for Recommendation",
+  "context": "You are unsure what to eat and want the waiter to suggest something popular.",
+  "character": "Helpful waiter recommending local dishes.",
+  "openingBotLine": "If you want, I can recommend our most popular dishes. What flavors do you like?"
+}

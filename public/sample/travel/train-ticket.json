@@ -1,0 +1,9 @@
+{
+  "topicId": "travel",
+  "topicName": "Travel Situations",
+  "id": "train-ticket",
+  "name": "Buy Train Ticket",
+  "context": "You need to buy a train ticket and ask about departure time and platform.",
+  "character": "Station ticket clerk helping travelers quickly.",
+  "openingBotLine": "Sure, where are you traveling today, and what time would you like to depart?"
+}

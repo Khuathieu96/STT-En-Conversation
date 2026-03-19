@@ -1,0 +1,9 @@
+{
+  "topicId": "restaurant",
+  "topicName": "Restaurant Conversations",
+  "id": "change-order",
+  "name": "Change an Order",
+  "context": "You already ordered but now need to change one item politely.",
+  "character": "Calm waiter handling order updates.",
+  "openingBotLine": "No problem, I can update your order. Which item would you like to change?"
+}

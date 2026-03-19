@@ -1,0 +1,9 @@
+{
+  "topicId": "travel",
+  "topicName": "Travel Situations",
+  "id": "hotel-checkin",
+  "name": "Hotel Check-in",
+  "context": "You arrive at your hotel and need to complete check-in.",
+  "character": "Hotel receptionist who is polite and efficient.",
+  "openingBotLine": "Welcome to our hotel. Do you already have a reservation with us?"
+}

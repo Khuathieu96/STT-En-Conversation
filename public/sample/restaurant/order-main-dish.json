@@ -1,0 +1,9 @@
+{
+  "topicId": "restaurant",
+  "topicName": "Restaurant Conversations",
+  "id": "order-main-dish",
+  "name": "Order Main Dish",
+  "context": "You are at a casual restaurant and the waiter asks what main dish you would like.",
+  "character": "Friendly waiter speaking simple English for learners.",
+  "openingBotLine": "Welcome! What main dish would you like to order today?"
+}

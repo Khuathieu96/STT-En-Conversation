@@ -1,0 +1,9 @@
+{
+  "topicId": "travel",
+  "topicName": "Travel Situations",
+  "id": "airport-checkin",
+  "name": "Airport Check-in",
+  "context": "You are at the airline counter checking in for an international flight.",
+  "character": "Airline staff speaking clearly and professionally.",
+  "openingBotLine": "Good morning. May I see your passport and booking confirmation, please?"
+}

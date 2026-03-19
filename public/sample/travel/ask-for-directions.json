@@ -1,0 +1,9 @@
+{
+  "topicId": "travel",
+  "topicName": "Travel Situations",
+  "id": "ask-for-directions",
+  "name": "Ask for Directions",
+  "context": "You are in a new city and need directions to a tourist place.",
+  "character": "Friendly local giving simple street directions.",
+  "openingBotLine": "Hi there! Where are you trying to go? I can help with directions."
+}

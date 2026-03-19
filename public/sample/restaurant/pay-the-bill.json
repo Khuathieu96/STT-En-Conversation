@@ -1,0 +1,9 @@
+{
+  "topicId": "restaurant",
+  "topicName": "Restaurant Conversations",
+  "id": "pay-the-bill",
+  "name": "Pay the Bill",
+  "context": "You finished eating and want to ask for the bill and payment options.",
+  "character": "Professional waiter closing the meal politely.",
+  "openingBotLine": "I hope you enjoyed your meal. Would you like the bill now?"
+}
