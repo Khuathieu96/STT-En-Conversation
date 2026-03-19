@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import type { Plugin } from "vite";
-import { synthesize } from "./server/tts";
 
 function ttsDevMiddleware(): Plugin {
   return {
@@ -34,6 +33,7 @@ function ttsDevMiddleware(): Plugin {
         }
 
         try {
+          const { synthesize } = await import("./server/tts");
           const result = await synthesize(text ?? "", voice, realtime);
 
           if (realtime) {
@@ -64,6 +64,6 @@ function ttsDevMiddleware(): Plugin {
   };
 }
 
-export default defineConfig({
-  plugins: [react(), ttsDevMiddleware()],
-});
+export default defineConfig(({ command }) => ({
+  plugins: command === "serve" ? [react(), ttsDevMiddleware()] : [react()],
+}));
