@@ -1,8 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import ResultPanel from './components/ResultPanel';
 import SpeechInput from './components/SpeechInput';
-import { buildCombinedPrompt } from './lib/prompt';
-import { callOpenRouter } from './lib/openrouter';
 import { parseEvaluation } from './lib/parser';
 import { speakRealtime, stopSpeaking, getMuted, setMuted } from './lib/tts';
 import type {
@@ -48,7 +46,6 @@ function slugify(input: string): string {
 }
 
 export default function App() {
-  const envApiKey = (import.meta.env.VITE_OPENROUTER_API_KEY ?? '').trim();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [latestResult, setLatestResult] = useState<ParseResult | null>(null);
@@ -96,8 +93,12 @@ export default function App() {
         setTopicOpenState(
           Object.fromEntries((payload.topics ?? []).map((t) => [t.id, true])),
         );
-        const first = payload.topics?.[0]?.scenarios?.[0];
-        if (first) setSelectedScenarioId(first.id);
+        const firstTopic = payload.topics?.[0];
+        const first = firstTopic?.scenarios?.[0];
+        if (first && firstTopic) {
+          setSelectedScenarioId(first.id);
+          setSelectedScenario({ topicName: firstTopic.name, scenario: first });
+        }
       } catch (err) {
         setError(
           err instanceof Error ? err.message : 'Could not load samples.',
@@ -190,12 +191,6 @@ export default function App() {
   }
 
   function handleStart(nextSetup: ConversationSetup) {
-    if (!envApiKey) {
-      setError(
-        'Missing VITE_OPENROUTER_API_KEY. Please set it in your .env file.',
-      );
-      return;
-    }
     setSetup(nextSetup);
     setMessages([{ role: 'bot', text: nextSetup.openingBotLine }]);
     setLatestResult(null);
@@ -220,18 +215,18 @@ export default function App() {
 
   const handleTranscriptDone = useCallback(
     (text: string) => {
-      if (!setup || !envApiKey || isEnded || loading) return;
+      if (!setup || isEnded || loading) return;
       setUserLine(text);
       // We set userLine then trigger evaluation in an effect-free way
       // by calling the evaluate logic directly with the text
       void evaluateWithText(text);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setup, envApiKey, isEnded, loading, messages],
+    [setup, isEnded, loading, messages],
   );
 
   async function evaluateWithText(text: string) {
-    if (!setup || !envApiKey || !text.trim() || isEnded || loading) return;
+    if (!setup || !text.trim() || isEnded || loading) return;
 
     const currentMessages = messagesRef.current;
     const prevBotLine = getLastBotLine(currentMessages);
@@ -259,11 +254,20 @@ export default function App() {
     setLatestResult(null);
 
     try {
-      // Single combined API call: evaluate + generate bot reply
-      const raw = await callOpenRouter(
-        envApiKey,
-        buildCombinedPrompt({ ...input, chatHistory: nextMessages }),
-      );
+      const response = await fetch('/api/evaluate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...input, chatHistory: nextMessages }),
+      });
+
+      if (!response.ok) {
+        const errBody = (await response.json().catch(() => ({}))) as {
+          error?: string;
+        };
+        throw new Error(errBody.error ?? `Server error ${response.status}`);
+      }
+
+      const { raw } = (await response.json()) as { raw: string };
       const parsed = parseEvaluation(raw);
       setLatestResult(parsed);
 
@@ -632,42 +636,38 @@ export default function App() {
                       </div>
                       <p>
                         {speakingIdx === idx && highlightWordIdx !== null
-                          ? message.text
-                              .split(/(\s+)/)
-                              .reduce<{
-                                wordCount: number;
-                                nodes: React.ReactNode[];
-                              }>(
-                                (acc, token, i) => {
-                                  if (/\s+/.test(token)) {
-                                    acc.nodes.push(
-                                      <span key={i}>{token}</span>,
-                                    );
-                                  } else {
-                                    const isActive =
-                                      acc.wordCount === highlightWordIdx;
-                                    const isPast =
-                                      acc.wordCount < highlightWordIdx;
-                                    acc.nodes.push(
-                                      <span
-                                        key={i}
-                                        className={
-                                          isActive
-                                            ? 'tts-word active'
-                                            : isPast
-                                              ? 'tts-word past'
-                                              : 'tts-word'
-                                        }
-                                      >
-                                        {token}
-                                      </span>,
-                                    );
-                                    acc.wordCount++;
-                                  }
-                                  return acc;
-                                },
-                                { wordCount: 0, nodes: [] },
-                              ).nodes
+                          ? message.text.split(/(\s+)/).reduce<{
+                              wordCount: number;
+                              nodes: React.ReactNode[];
+                            }>(
+                              (acc, token, i) => {
+                                if (/\s+/.test(token)) {
+                                  acc.nodes.push(<span key={i}>{token}</span>);
+                                } else {
+                                  const isActive =
+                                    acc.wordCount === highlightWordIdx;
+                                  const isPast =
+                                    acc.wordCount < highlightWordIdx;
+                                  acc.nodes.push(
+                                    <span
+                                      key={i}
+                                      className={
+                                        isActive
+                                          ? 'tts-word active'
+                                          : isPast
+                                            ? 'tts-word past'
+                                            : 'tts-word'
+                                      }
+                                    >
+                                      {token}
+                                    </span>,
+                                  );
+                                  acc.wordCount++;
+                                }
+                                return acc;
+                              },
+                              { wordCount: 0, nodes: [] },
+                            ).nodes
                           : message.text}
                       </p>
                     </div>
